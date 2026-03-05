@@ -96,8 +96,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+    @ExceptionHandler(FileValidateException.class)
+    public ResponseEntity<?> handleValidationException(FileValidateException ex) {
         ErrorResponseDTO response = ErrorResponseDTO.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
                 .message("Validation failed")
