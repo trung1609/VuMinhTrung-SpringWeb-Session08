@@ -73,6 +73,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .code(HttpStatus.NOT_FOUND.value())
+                .message("Resource not found")
+                .details(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex){
         ErrorResponseDTO response = ErrorResponseDTO.builder()

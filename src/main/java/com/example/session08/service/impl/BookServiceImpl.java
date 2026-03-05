@@ -1,8 +1,10 @@
 package com.example.session08.service.impl;
 
 import com.example.session08.exception.FileStorageException;
+import com.example.session08.exception.ResourceNotFoundException;
 import com.example.session08.model.dto.ApiResponse;
 import com.example.session08.model.dto.BookCreateDTO;
+import com.example.session08.model.dto.BookUpdateDTO;
 import com.example.session08.model.entity.Book;
 import com.example.session08.repository.BookRepository;
 import com.example.session08.service.BookService;
@@ -49,5 +51,14 @@ public class BookServiceImpl implements BookService {
 
         return new ApiResponse<>("SUCCESS", "Book created successfully", bookEntity);
 
+    }
+
+    @Override
+    public ApiResponse<Book> updateBook(Long id, BookUpdateDTO request) throws ResourceNotFoundException {
+        Book book = bookRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Book not found with id: " + id));
+
+        book.setStock(request.getStock());
+        bookRepository.save(book);
+        return new ApiResponse<>("SUCCESS", "Book updated successfully", book);
     }
 }
