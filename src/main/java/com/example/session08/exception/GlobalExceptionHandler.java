@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,26 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<?> handleFileStorageException(FileStorageException ex) {
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message("Validation failed")
+                .details("File storage error: " + ex.getMessage())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .code(HttpStatus.PAYLOAD_TOO_LARGE.value())
+                .message("Validation failed")
+                .details("File size exceeds the maximum allowed size ")
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex){
         ErrorResponseDTO response = ErrorResponseDTO.builder()
@@ -61,5 +82,9 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+
+
 
 }

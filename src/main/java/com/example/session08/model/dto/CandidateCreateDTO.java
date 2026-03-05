@@ -3,6 +3,7 @@ package com.example.session08.model.dto;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -33,4 +34,6 @@ public class CandidateCreateDTO {
     @NotBlank(message = "Phone cannot be blank")
     @Pattern(regexp = "^0([35789])[0-9]{8}$", message = "Phone number is invalid")
     private String phone;
+
+    private MultipartFile file;
 }
