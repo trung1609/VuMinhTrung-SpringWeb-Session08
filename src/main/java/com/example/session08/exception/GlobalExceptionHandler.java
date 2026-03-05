@@ -2,6 +2,7 @@ package com.example.session08.exception;
 
 import com.example.session08.model.dto.ApiResponse;
 import com.example.session08.model.dto.ErrorResponseDTO;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -93,6 +94,17 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.value())
+                .message("Validation failed")
+                .details(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

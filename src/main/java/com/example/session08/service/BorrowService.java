@@ -1,0 +1,10 @@
+package com.example.session08.service;
+
+import com.example.session08.model.dto.ApiResponse;
+import com.example.session08.model.dto.BorrowCreateDTO;
+import com.example.session08.model.entity.Borrow;
+
+public interface BorrowService {
+
+    ApiResponse<Borrow> borrowBook(BorrowCreateDTO request);
+}
