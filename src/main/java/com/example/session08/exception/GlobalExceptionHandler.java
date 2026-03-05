@@ -107,6 +107,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BookAlreadyReturnedException.class)
+    public ResponseEntity<?> handleBookAlreadyReturnedException(BookAlreadyReturnedException ex) {
+        ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.value())
+                .message("BAD_REQUEST")
+                .details(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex){
         ErrorResponseDTO response = ErrorResponseDTO.builder()
