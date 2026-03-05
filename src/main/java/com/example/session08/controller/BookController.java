@@ -30,4 +30,9 @@ public class BookController {
     public ResponseEntity<ApiResponse<Book>> updateBook(@PathVariable Long id, @Valid @RequestBody BookUpdateDTO request) throws ResourceNotFoundException {
         return new ResponseEntity<>(bookService.updateBook(id, request), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Book>> getBookById(@PathVariable Long id) throws ResourceNotFoundException {
+        return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
+    }
 }

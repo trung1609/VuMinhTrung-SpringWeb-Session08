@@ -55,10 +55,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ApiResponse<Book> updateBook(Long id, BookUpdateDTO request) throws ResourceNotFoundException {
-        Book book = bookRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Book not found with id: " + id));
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
 
         book.setStock(request.getStock());
         bookRepository.save(book);
         return new ApiResponse<>("SUCCESS", "Book updated successfully", book);
+    }
+
+    @Override
+    public ApiResponse<Book> getBookById(Long id) throws ResourceNotFoundException {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
+        return new ApiResponse<>("SUCCESS", "Book found successfully", book);
     }
 }
