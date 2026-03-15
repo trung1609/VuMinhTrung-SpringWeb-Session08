@@ -1,0 +1,7 @@
+package com.example.session08.exception;
+
+public class BookAlreadyReturnedException extends Exception{
+    public BookAlreadyReturnedException(String message) {
+        super(message);
+    }
+}

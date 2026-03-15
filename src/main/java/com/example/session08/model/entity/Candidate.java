@@ -35,4 +35,5 @@ public class Candidate {
     private String address;
     private String phone;
     private String bio;
+    private String avatar;
 }
